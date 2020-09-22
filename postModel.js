@@ -7,4 +7,5 @@ const instance = mongoose.Schema({
 	comments: [],
 });
 
+// Export as this collection
 export default mongoose.model("posts", instance);
