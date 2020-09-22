@@ -11,8 +11,8 @@ const port = process.env.PORT || 8080;
 // set up Pusher connection
 const pusher = new Pusher({
 	appId: "1076988",
-	key: "1ad8f300734d63cac07f",
-	secret: "51a504d5d9d4ca3e433b",
+	key: PUSHER_KEY,
+	secret: PUSHER_SECRET,
 	cluster: "us2",
 	usetls: true,
 });
@@ -44,6 +44,19 @@ mongoose.connection.once("open", () => {
 		console.log("Change triggered on Pusher...");
 		console.log(change);
 		console.log("End of Change");
+
+		if (change.operationType === "insert") {
+			console.log("Triggering Pusher ***IMG UPLOAD***");
+			// full document -> what was added to db
+			const postDetails = change.fullDocument;
+			pusher.trigger("posts", "inserted", {
+				user: postDetails.user,
+				caption: postDetails.caption,
+				image: postDetails.image,
+			});
+		} else {
+			console.log("Unknown trigger from Pusher");
+		}
 	});
 });
 
