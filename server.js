@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -14,7 +13,9 @@ app.use(express.json());
 app.use(cors());
 
 // DB config
-mongoose.connect(process.env.MONGO_URL, {
+const { MONGO_URL } = process.env;
+console.log(MONGO_URL);
+mongoose.connect(MONGO_URL, {
 	useCreateIndex: true,
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
