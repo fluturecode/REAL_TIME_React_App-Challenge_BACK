@@ -9,17 +9,14 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 // set up Pusher connection
+const { PUSHER_KEY, PUSHER_SEC } = process.env;
 const pusher = new Pusher({
 	appId: "1076988",
 	key: PUSHER_KEY,
-	secret: PUSHER_SECRET,
+	secret: PUSHER_SEC,
 	cluster: "us2",
 	usetls: true,
 });
-
-// pusher.trigger('my-channel', 'my-event', {
-//   'message': 'hello world'
-// });
 
 // middleware
 app.use(express.json());
